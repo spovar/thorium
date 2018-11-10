@@ -235,10 +235,31 @@ App.on("removeSensorContact", ({ id, contact }) => {
 });
 App.on("removeAllSensorContacts", ({ id, type }) => {
   const system = App.systems.find(sys => sys.id === id);
+
+  let removeContacts = [];
   if (type) {
+    removeContacts = system.contacts.filter(c => type.indexOf(c.type) > -1);
     system.contacts = system.contacts.filter(c => type.indexOf(c.type) === -1);
+  } else {
+    removeContacts = system.contacts.concat();
+    system.contacts = [];
   }
-  system.contacts = [];
+  // Also remove any contacts from targeting
+  if (removeContacts.length > 0) {
+    const targeting = App.systems.find(
+      s => s.simulatorId === system.simulatorId && s.class === "Targeting"
+    );
+
+    removeContacts.forEach(c => {
+      if (targeting.classes.find(t => t.id === c.id)) {
+        targeting.removeTargetClass(c.id);
+      }
+    });
+    pubsub.publish(
+      "targetingUpdate",
+      App.systems.filter(s => s.type === "Targeting")
+    );
+  }
   pubsub.publish("sensorContactUpdate", system);
 });
 App.on("stopAllSensorContacts", ({ id }) => {
@@ -250,12 +271,38 @@ App.on("stopAllSensorContacts", ({ id }) => {
 });
 App.on("destroySensorContact", ({ id, contact, contacts = [] }) => {
   const system = App.systems.find(sys => sys.id === id);
+  // Also remove the contact from targeting
+  const targeting = App.systems.find(
+    s => s.simulatorId === system.simulatorId && s.class === "Targeting"
+  );
+  let update = false;
   if (contact) {
     system.destroyContact({ id: contact });
+    if (targeting.classes.find(t => t.id === contact)) {
+      update = true;
+      setTimeout(() => {
+        targeting.removeTargetClass(contact);
+      }, 1000);
+    }
   } else {
-    contacts.forEach(c => system.destroyContact({ id: c }));
+    contacts.forEach(c => {
+      system.destroyContact({ id: c });
+      if (targeting.classes.find(t => t.id === c)) {
+        update = true;
+        setTimeout(() => {
+          targeting.removeTargetClass(c);
+        }, 1000);
+      }
+    });
   }
   pubsub.publish("sensorContactUpdate", system);
+  if (update)
+    setTimeout(() => {
+      pubsub.publish(
+        "targetingUpdate",
+        App.systems.filter(s => s.type === "Targeting")
+      );
+    }, 1100);
 });
 App.on("updateSensorContact", args => {
   const { id, simulatorId, contact } = args;
@@ -446,9 +493,14 @@ App.on("updateSensorContacts", ({ id, contacts }) => {
   pubsub.publish("sensorContactUpdate", system);
 });
 
+const findNewPoint = (angle, r) => ({
+  x: Math.cos(angle) * r,
+  y: Math.sin(angle) * r
+});
+
 App.on(
   "sensorsFireProjectile",
-  ({ simulatorId, contactId, speed, hitpoints }) => {
+  ({ simulatorId, contactId, speed, hitpoints, miss }) => {
     const system = App.systems.find(
       sys =>
         sys.simulatorId === simulatorId &&
@@ -465,9 +517,19 @@ App.on(
       hitpoints,
       autoFire: false,
       hostile: false,
-      type: "projectile"
+      type: "projectile",
+      miss
     });
-    projectile.move({ x: -0.02, y: -0.02, z: 0 }, speed);
+    // Move it to the exact oposite side of the grid
+    // at a radius of 1.2
+    const currentAngle = Math.atan2(
+      projectile.position.y,
+      projectile.position.x
+    );
+    projectile.move(
+      { ...findNewPoint(currentAngle + Math.PI, 1.5), z: 0 },
+      speed
+    );
     system.contacts.push(projectile);
     pubsub.publish("sensorContactUpdate", system);
   }
@@ -497,6 +559,21 @@ App.on("setSensorsDefaultSpeed", ({ id, simulatorId, speed }) => {
         sys.class === "Sensors")
   );
   system.setDefaultSpeed(speed);
+  pubsub.publish(
+    "sensorsUpdate",
+    App.systems.filter(s => s.type === "Sensors")
+  );
+});
+
+App.on("setSensorsMissPercent", ({ id, simulatorId, miss }) => {
+  const system = App.systems.find(
+    sys =>
+      sys.id === id ||
+      (sys.simulatorId === simulatorId &&
+        sys.domain === "external" &&
+        sys.class === "Sensors")
+  );
+  system.setMissPercent(miss);
   pubsub.publish(
     "sensorsUpdate",
     App.systems.filter(s => s.type === "Sensors")

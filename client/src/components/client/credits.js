@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container, Button } from "reactstrap";
+import "./credits.scss";
 
 const creditList = [
   {
@@ -31,9 +32,13 @@ const creditList = [
     content: "Nathan King 👑"
   },
   {
+    header: "Epsilon Design",
+    content: "Inspired by the Empty Epsilon Bridge Simulator"
+  },
+  {
     header: "Code Contributors",
     content: (
-      <ul style={{ listStyle: "none" }}>
+      <ul>
         <li>
           <code>G33kX</code>
         </li>
@@ -52,13 +57,16 @@ const creditList = [
         <li>
           <code>J-F1</code>
         </li>
+        <li>
+          <code>ericman314</code>
+        </li>
       </ul>
     )
   },
   {
     header: "Bug Reports & Feature Suggestions",
     content: (
-      <ul style={{ listStyle: "none" }}>
+      <ul>
         <li>Ryan Anderson</li>
         <li>Alex DeBirk</li>
         <li>James Porter</li>
@@ -70,16 +78,16 @@ const creditList = [
         <li>Natalie Anderson</li>
         <li>Tabitha Long</li>
         <li>Bracken Funk</li>
-        <li>
-          <code>kimballfrank</code>
-        </li>
+        <li>Kimball Frank</li>
+        <li>Nathan Young</li>
+        <li>Jensen Caldwell</li>
       </ul>
     )
   },
   {
     header: "Donors",
     content: (
-      <ul style={{ listStyle: "none" }}>
+      <ul>
         <li>
           Thomas Delclite{" "}
           <span role="img" aria-label="donor-tag">
@@ -111,7 +119,7 @@ const creditList = [
           </span>
         </li>
         <li>
-          The Christa McAuliffe Space Education Center{" "}
+          The Christa McAuliffe Space Center{" "}
           <span role="img" aria-label="donor-tag">
             🛰
           </span>
@@ -126,6 +134,12 @@ const creditList = [
           Ryan Anderson
           <span role="img" aria-label="donor-tag">
             🔭
+          </span>
+        </li>
+        <li>
+          Nathan Young
+          <span role="img" aria-label="donor-tag">
+            🇺🇸
           </span>
         </li>
       </ul>

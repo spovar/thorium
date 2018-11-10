@@ -1,6 +1,6 @@
 {
   "name": "thorium-server",
-  "version": "1.0.21",
+  "version": "1.0.25",
   "description": "Starship Simulator Controls Server, built with GraphQL",
   "private": true,
   "repository": {
@@ -20,7 +20,7 @@
     "clean": "rm -rf node_modules",
     "clean-build": "rm -rf build",
     "copy-files": "cp -r src/crew build/crew",
-    "test": "jest"
+    "test": "jest --setupFiles ./tests/setup.js"
   },
   "dependencies": {
     "appdirectory": "^0.1.0",
@@ -35,6 +35,7 @@
     "graphql-server-express": "^1.4.0",
     "graphql-subscriptions": "^0.5.8",
     "graphql-tools": "^3.1.1",
+    "graphql-type-json": "^0.2.1",
     "jest": "^23.5.0",
     "luxon": "^1.3.3",
     "multer": "^1.3.1",

@@ -1,4 +1,70 @@
 {
+  "1.0.26": {
+    "features": [
+      "Added an internal comm notification on the crew station.",
+      "Add the ability to have icons on a tactical map controllable with the ship's thrusters.",
+      "Add an additional scan preset for recommending the opposite (internal or external) sensors."
+    ],
+    "fixes": [
+      "Security decks now properly gets updates.",
+      "Fixes an issue with the damage teams tasks core component.",
+      "Conversations in the new messaging core now stay red when done transitioning.",
+      "Contacts are now properly removed from the targeting core when a sensor contact is destroyed or cleared."
+    ]
+  },
+  "1.0.25": {
+    "features": [
+      "Add a sensors widget so it can be shown over other screens.",
+      "Add ability to change heat rate in the systems config.",
+      "Add an Add Task timeline macro",
+      "Make it possible to edit timeline steps in the timeline core.",
+      "Add the ability to provide station ambiance."
+    ],
+    "fixes": [
+      "Fix an issue with crashes creating ambiance tracks.",
+      "Fixes an issue where too many task templates can't scroll.",
+      "Made it so the 'Begin Training' button on the login screen starts the training player if there is an audio or video training."
+    ]
+  },
+  "1.0.24": {
+    "features": [
+      "Make it possible to change the phasers to hold to charge.",
+      "Add a send button to the new messaging core.",
+      "Set up the cargo screen so it uses a ready cargo area.",
+      "Provide a running log of cargo transfers in the cargo core.",
+      "Add the ability to easily change which deck a room is on from the deck simulator config.",
+      "Add a toggle to disable the jump drive without damaging it.",
+      "Add analytics to Thorium. It sends data about your use of Thorium to me (Alex). It's opt-in, but much appreciated if you choose to share your data.",
+      "Add a new layout that matches the popular Empty Epsilon bridge simulator. Thanks BlueShadow!"
+    ]
+  },
+  "1.0.23": {
+    "features": [
+      "Improve tasks so they have notifications.",
+      "Add notifications for comm review.",
+      "Add a log to the cargo core for tracking where and when cargo transfers happen. Also add notifications.",
+      "Improve the notifications around the new messaging core, including a sound effect and visual changes.",
+      "Updated battle core to allow for missed projectiles. This can be done with a direct button press or with auto-fired enabled and a percentage chance of missing.",
+      "Also updated battle core so projectiles only explode if they intersect with the center of the sensors grid. This means if the crew uses their thrusters to dodge, projectiles will not impact."
+    ]
+  },
+  "1.0.22": {
+    "features": [
+      "Added the first iteration of crew task management! This is a huge release, so there will be several bullets below describing it.",
+      "Added the task management core. Individual tasks which can be performed by the crew are programmatically specified, with the possible values that can be inputted, a textual instructions template, and automatic verification. Note: not all possible crew tasks are represented yet. More will be added as time goes on. To suggest additional task definitions, fill out this form: http://bit.ly/task-definitions",
+      "Added the task management widget and card. This can be assigned to stations so crew members can see and complete tasks assigned to them. They can also request to verify tasks that can't be automatically verified.",
+      "Added the task template creation system. This can be found in the sidebar menu. Task templates allow flight directors to create preset tasks that can quickly and easily be used during a mission.",
+      "Tasks open up a lot of interesting possibilities, including tracking the time it takes crew members to complete tasks and creating badges and awards for completing certain tasks. Get in touch if you have interesting ideas for how tasks can be used.",
+      "More features are planned surrounding tasks in the future. This includes a damage report overhaul, security incident reporting, automatic damage pings, and a command/XO screen allowing them to prioritize tasks.",
+      "We now return to your normally scheduled feature lists.",
+      "Added the ability to print crew officer's logs. Make sure you set up a printer for this feature to work correctly. Thanks @ericman314!",
+      "Add the crew login name to the bridge map screen.",
+      "Add lines to the sensors core movement circle to indicate the straight directions."
+    ],
+    "fixes": [
+      "Fixes an issue where you can't see where you are calling from on the internal comm core."
+    ]
+  },
   "1.0.21": {
     "features": [
       "Added the particle detector, Magellan 2012 style. It has a fixed set of icons and types, but those can be expanded through code if necessary.",

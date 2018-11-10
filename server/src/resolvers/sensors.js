@@ -33,7 +33,6 @@ export const SensorsQueries = {
     if (hostile || hostile === false)
       contacts = contacts.filter(c => c.hostile === hostile);
     if (type) {
-      console.log(contacts);
       contacts = contacts.filter(c => c.type === type);
     }
     return contacts;
@@ -154,6 +153,9 @@ export const SensorsMutations = {
   },
   setSensorsDefaultSpeed(root, args, context) {
     App.handleEvent(args, "setSensorsDefaultSpeed", context);
+  },
+  setSensorsMissPercent(root, args, context) {
+    App.handleEvent(args, "setSensorsMissPercent", context);
   }
 };
 

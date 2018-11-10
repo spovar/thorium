@@ -27,6 +27,7 @@ updateRoomRoles(roomId: ID!, roles: [RoomRoles]): String
 updateRoomSvg(roomId: ID!, svg: String!): String
 roomGas(roomId: ID!, gas: Boolean): String
 importRooms(simulatorId: ID!, rooms:[RoomInput]!): String
+changeRoomDeck(roomId:ID!, deckId:ID!):String
 
 ### Inventory
 addInventory(inventory: InventoryItemInput): String
@@ -36,4 +37,5 @@ updateInventoryCount(id: ID!, room: ID!, count: Int!): String
 updateInventoryMetadata(id: ID, metadata: InventoryMetadataInput): String
 updateCrewInventory(crewId:ID!, inventory:[InventoryCount]!, roomId:ID):String
 removeCrewInventory(crewId:ID!, inventory:[InventoryCount]!, roomId:ID!):String
+transferCargo(inventory:[InventoryCountInput], fromRoom:ID!, toRoom:ID!):String
 `;

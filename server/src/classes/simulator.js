@@ -74,6 +74,9 @@ class Ship {
     this.extraSystems = [];
     const codes = params.remoteAccessCodes || [];
     codes.forEach(c => this.remoteAccessCodes.push(new RemoteAccess(c)));
+
+    // Inventory Logs
+    this.inventoryLogs = params.inventoryLogs || [];
   }
 }
 
@@ -89,7 +92,7 @@ class Assets {
 }
 
 export default class Simulator {
-  constructor(params) {
+  constructor(params = {}) {
     this.id = params.id || uuid.v4();
     this.name = params.name || "Simulator";
     this.layout = params.layout || "LayoutDefault";
